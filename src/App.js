@@ -1,5 +1,5 @@
 import React from "react";
-import ChatComponent from "./ChatComponent/ChatComponent"; // Asegúrate de que la ruta sea correcta
+import ChatComponent from "./ChatComponent/ChatComponent";
 
 function App() {
   return (

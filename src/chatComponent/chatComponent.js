@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./chatComponent.css"; // Importa el archivo CSS para los estilos
+import "./ChatComponent.css"; // Importa el archivo CSS para los estilos
 
 function ChatComponent() {
   const [messages, setMessages] = useState([]);
