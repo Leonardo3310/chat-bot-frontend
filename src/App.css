@@ -1,38 +1,81 @@
+/* Para centrar la aplicación y darle un fondo oscuro */
 .App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #282c34;
+  color: white;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Contenedor principal del chat */
+.chat-container {
+  width: 80%; /* Ocupa el 80% del ancho de la pantalla */
+  max-width: 600px; /* Limita el ancho máximo a 600px */
+  background-color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Contenedor de mensajes con scrollbar si es necesario */
+.messages {
+  max-height: 400px; /* Altura máxima para el área de mensajes */
+  overflow-y: auto;
+  padding: 10px;
+  margin-bottom: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* Estilos de los mensajes del usuario y del bot */
+.user-message, .bot-message {
+  display: inline-block;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 5px 0;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.user-message {
+  background-color: #007bff;
   color: white;
+  text-align: right;
+  align-self: flex-end;
 }
 
-.App-link {
-  color: #61dafb;
+.bot-message {
+  background-color: #444;
+  color: white;
+  text-align: left;
+  align-self: flex-start;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Estilos del campo de entrada y botón de enviar */
+input {
+  width: 70%; /* Ajusta el ancho del campo de texto */
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin-right: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+/* Estilos responsivos para pantallas pequeñas */
+@media (max-width: 768px) {
+  .chat-container {
+    width: 95%; /* Casi todo el ancho en pantallas pequeñas */
   }
-  to {
-    transform: rotate(360deg);
+
+  input {
+    width: 65%; /* Ajusta el ancho del campo de texto */
   }
 }
