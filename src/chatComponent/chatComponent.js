@@ -1,22 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./ChatComponent.css";
 
 function ChatComponent() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-
-  // Cargar mensajes desde Local Storage al iniciar el componente
-  useEffect(() => {
-    const savedMessages = JSON.parse(localStorage.getItem("chatMessages"));
-    if (savedMessages) {
-      setMessages(savedMessages);
-    }
-  }, []);
-
-  // Guardar mensajes en Local Storage cada vez que cambian
-  useEffect(() => {
-    localStorage.setItem("chatMessages", JSON.stringify(messages));
-  }, [messages]);
 
   const sendMessage = async () => {
     if (input.trim() === "") return;
@@ -36,30 +23,45 @@ function ChatComponent() {
       const data = await response.json();
 
       // Agregar la respuesta del bot a la lista de mensajes
-      setMessages([...newMessages, { text: data.response, user: false }]);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: data.response, user: false },
+      ]);
     } catch (error) {
       console.error("Error:", error);
-      // Puedes agregar un mensaje de error al chat si lo deseas
+      // Agregar un mensaje de error si el backend falla
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: "Hubo un problema al conectar con el servidor.", user: false },
+      ]);
     }
   };
 
   return (
     <div className="chat-container">
-      <h1>Chat Bot</h1>
-      <div className="messages">
+      <div className="chat-header">
+        <h1>Chat Bot</h1>
+      </div>
+      <div className="chat-messages">
         {messages.map((msg, index) => (
-          <div key={index} className={msg.user ? "user-message" : "bot-message"}>
+          <div
+            key={index}
+            className={msg.user ? "message user-message" : "message bot-message"}
+          >
             {msg.text}
           </div>
         ))}
       </div>
-      <input
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-        placeholder="Type your message..."
-      />
-      <button onClick={sendMessage}>Send</button>
+      <div className="chat-input-container">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Escribe tu mensaje..."
+          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+        />
+        <button onClick={sendMessage}>Enviar</button>
+      </div>
     </div>
   );
 }
