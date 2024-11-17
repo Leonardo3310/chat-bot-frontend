@@ -5,6 +5,7 @@ import "./ChatComponent.css";
 function ChatComponent() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Indicador de carga
 
   const sendMessage = async () => {
     if (input.trim() === "") return;
@@ -12,6 +13,7 @@ function ChatComponent() {
     const newMessages = [...messages, { text: input, user: true }];
     setMessages(newMessages);
     setInput("");
+    setIsLoading(true);
 
     try {
       const response = await fetch("http://127.0.0.1:5000/api", {
@@ -31,6 +33,8 @@ function ChatComponent() {
         ...prevMessages,
         { text: "Hubo un problema al conectar con el servidor.", user: false },
       ]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -45,6 +49,13 @@ function ChatComponent() {
             key={index}
             className={msg.user ? "message user-message" : "message bot-message"}
           >
+            {!msg.user && (
+              <img
+                src="public/logoCHat.png" // Cambia esto por la ruta de tu logo
+                alt="Bot Logo"
+                className="bot-logo"
+              />
+            )}
             {msg.user ? (
               msg.text
             ) : (
@@ -52,6 +63,17 @@ function ChatComponent() {
             )}
           </div>
         ))}
+        {isLoading && (
+          <div className="loading-indicator">
+            <img
+              src="public/logoCHat.png" // Ruta de tu logo
+              alt="Bot Logo"
+              className="bot-logo"
+            />
+            <div className="spinner"></div>
+            <span>Escribiendo...</span>
+          </div>
+        )}
       </div>
       <div className="chat-input-container">
         <input

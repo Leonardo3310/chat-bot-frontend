@@ -6,20 +6,17 @@
   width: 100%; /* Ocupa todo el ancho de la pantalla */
   height: 100vh; /* Ocupa todo el alto de la pantalla */
   margin: 0; /* Elimina márgenes */
-  background-color: #1e1e2f;
-  border-radius: 0; /* Sin bordes redondeados */
-  box-shadow: none; /* Sin sombras */
+  background-color: #1e1e2f; /* Fondo del chat */
   color: white;
-  
   overflow: hidden; /* Asegura que no haya desbordamiento */
 }
 
 /* Encabezado del chat */
 .chat-header {
   padding: 20px;
-  background-color: #6369ca;
+  background-color: #6369ca; /* Color del encabezado */
   text-align: center;
-  font-size: 1em;
+  font-size: 1.2em; /* Tamaño del texto */
   font-weight: bold;
   color: white;
 }
@@ -32,48 +29,63 @@
   display: flex;
   flex-direction: column;
   gap: 10px; /* Espacio entre los mensajes */
-}
-
-/* Mensaje individual */
-.message {
-  max-width: 70%;
-  padding: 10px;
-  border-radius: 8px;
-  line-height: 1.5;
-  word-wrap: break-word;
+  scroll-behavior: smooth; /* Desplazamiento suave */
 }
 
 /* Mensaje del usuario */
 .user-message {
   align-self: flex-end;
-  background-color: #007bff;
+  background-color: #007bff; /* Fondo del mensaje del usuario */
   color: white;
+  border-radius: 8px;
+  padding: 10px;
+  max-width: 70%; /* Máximo ancho del mensaje */
+  word-wrap: break-word;
+  white-space: pre-wrap; /* Respeta saltos de línea */
 }
 
-/* Mensaje del bot */
+/* Mensaje del bot con logo */
 .bot-message {
-  align-self: flex-start;
-  background-color: #333;
+  display: flex; /* Alinea el contenido horizontalmente */
+  align-items: flex-start; /* Alinea verticalmente al inicio */
+  gap: 10px; /* Espacio entre el logo y el texto */
+  background-color: #333; /* Fondo del mensaje del bot */
   color: white;
+  border-radius: 8px;
+  padding: 10px;
+  max-width: 70%; /* Máximo ancho del mensaje */
+  word-wrap: break-word;
+  white-space: pre-wrap; /* Respeta saltos de línea */
+}
+
+/* Logo del bot */
+.bot-logo {
+  width: 40px; /* Ancho del logo */
+  height: 40px; /* Alto del logo */
+  border-radius: 50%; /* Hace el logo redondo */
+  background-color: white; /* Fondo blanco (opcional) */
+  object-fit: cover; /* Ajusta la imagen sin deformarla */
 }
 
 /* Contenedor del campo de entrada */
 .chat-input-container {
   display: flex;
   padding: 10px;
-  background-color: #282c34;
+  background-color: #282c34; /* Fondo de la barra de entrada */
   align-items: center;
-  border-top: 1px solid #444; /* Línea superior para separar la entrada */
+  border-top: 1px solid #444; /* Línea separadora */
 }
 
 /* Campo de texto */
 .chat-input-container input {
-  flex-grow: 1;
+  flex-grow: 1; /* Ocupa el espacio disponible */
   padding: 10px;
   border-radius: 5px;
   border: none;
   margin-right: 10px;
   font-size: 1em;
+  background-color: #1e1e2f; /* Fondo del campo de texto */
+  color: white; /* Texto blanco */
 }
 
 /* Botón de enviar */
@@ -88,7 +100,36 @@
 }
 
 .chat-input-container button:hover {
-  background-color: #0056b3;
+  background-color: #0056b3; /* Color al pasar el mouse */
+}
+
+/* Indicador de carga */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  align-self: flex-start;
+}
+
+/* Spinner animado */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Animación del spinner */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Diseño responsivo */
@@ -104,5 +145,10 @@
 
   .chat-input-container button {
     font-size: 0.9em;
+  }
+
+  .bot-logo {
+    width: 30px; /* Tamaño del logo reducido para pantallas pequeñas */
+    height: 30px;
   }
 }
