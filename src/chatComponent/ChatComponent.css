@@ -10,15 +10,16 @@
   border-radius: 0; /* Sin bordes redondeados */
   box-shadow: none; /* Sin sombras */
   color: white;
+  
   overflow: hidden; /* Asegura que no haya desbordamiento */
 }
 
 /* Encabezado del chat */
 .chat-header {
   padding: 20px;
-  background-color: #007bff;
+  background-color: #6369ca;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1em;
   font-weight: bold;
   color: white;
 }
