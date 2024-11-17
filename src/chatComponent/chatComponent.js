@@ -51,7 +51,7 @@ function ChatComponent() {
           >
             {!msg.user && (
               <img
-                src="public/logoCHat.png" // Cambia esto por la ruta de tu logo
+                src="/logoCHat.png" // Cambia esto por la ruta de tu logo
                 alt="Bot Logo"
                 className="bot-logo"
               />
@@ -66,7 +66,7 @@ function ChatComponent() {
         {isLoading && (
           <div className="loading-indicator">
             <img
-              src="public/logoCHat.png" // Ruta de tu logo
+              src="/logoCHat.png" // Ruta de tu logo
               alt="Bot Logo"
               className="bot-logo"
             />
