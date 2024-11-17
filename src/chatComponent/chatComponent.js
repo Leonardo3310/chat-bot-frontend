@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import ChatHeader from "./ChatHeader"; // Importa el nuevo header
 import "./ChatComponent.css";
 
 function ChatComponent() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Indicador de carga
+  const [isLoading, setIsLoading] = useState(false);
 
   const sendMessage = async () => {
     if (input.trim() === "") return;
@@ -40,9 +41,10 @@ function ChatComponent() {
 
   return (
     <div className="chat-container">
-      <div className="chat-header">
-        <h1>Financhat</h1>
-      </div>
+      {/* Nuevo Header con Material-UI */}
+      <ChatHeader />
+
+      {/* Resto del componente */}
       <div className="chat-messages">
         {messages.map((msg, index) => (
           <div
@@ -51,7 +53,7 @@ function ChatComponent() {
           >
             {!msg.user && (
               <img
-                src="/logoCHat.png" // Cambia esto por la ruta de tu logo
+                src="/logoCHat.png"
                 alt="Bot Logo"
                 className="bot-logo"
               />
@@ -66,7 +68,7 @@ function ChatComponent() {
         {isLoading && (
           <div className="loading-indicator">
             <img
-              src="/logoCHat.png" // Ruta de tu logo
+              src="/logoCHat.png"
               alt="Bot Logo"
               className="bot-logo"
             />
