@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ReactMarkdown from "react-markdown";
 import "./ChatComponent.css";
 
 function ChatComponent() {
@@ -8,13 +9,11 @@ function ChatComponent() {
   const sendMessage = async () => {
     if (input.trim() === "") return;
 
-    // Agregar el mensaje del usuario a la lista de mensajes
     const newMessages = [...messages, { text: input, user: true }];
     setMessages(newMessages);
     setInput("");
 
     try {
-      // Enviar el mensaje al backend
       const response = await fetch("http://127.0.0.1:5000/api", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -22,14 +21,12 @@ function ChatComponent() {
       });
       const data = await response.json();
 
-      // Agregar la respuesta del bot a la lista de mensajes
       setMessages((prevMessages) => [
         ...prevMessages,
         { text: data.response, user: false },
       ]);
     } catch (error) {
       console.error("Error:", error);
-      // Agregar un mensaje de error si el backend falla
       setMessages((prevMessages) => [
         ...prevMessages,
         { text: "Hubo un problema al conectar con el servidor.", user: false },
@@ -48,7 +45,11 @@ function ChatComponent() {
             key={index}
             className={msg.user ? "message user-message" : "message bot-message"}
           >
-            {msg.text}
+            {msg.user ? (
+              msg.text
+            ) : (
+              <ReactMarkdown>{msg.text}</ReactMarkdown>
+            )}
           </div>
         ))}
       </div>
