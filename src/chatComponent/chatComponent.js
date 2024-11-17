@@ -41,7 +41,7 @@ function ChatComponent() {
   return (
     <div className="chat-container">
       <div className="chat-header">
-        <h1>Chat Bot</h1>
+        <h1>Financhat</h1>
       </div>
       <div className="chat-messages">
         {messages.map((msg, index) => (
