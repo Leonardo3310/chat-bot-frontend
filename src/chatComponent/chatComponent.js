@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
-import ChatHeader from "./ChatHeader"; // Importa el nuevo header
 import "./ChatComponent.css";
 
 function ChatComponent() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Indicador de carga
+  const messagesEndRef = useRef(null); // Referencia al final del contenedor de mensajes
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom(); // Desplázate al último mensaje cuando cambien los mensajes
+  }, [messages]);
 
   const sendMessage = async () => {
     if (input.trim() === "") return;
@@ -41,12 +49,14 @@ function ChatComponent() {
 
   return (
     <div className="chat-container">
-      <ChatHeader />
+      <div className="chat-header">
+        <h1>Financhat</h1>
+      </div>
       <div className="chat-messages">
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={msg.user ? "user-message" : "bot-message"}
+            className={msg.user ? "message user-message" : "message bot-message"}
           >
             {!msg.user && (
               <img
@@ -55,35 +65,21 @@ function ChatComponent() {
                 className="bot-logo"
               />
             )}
-            <ReactMarkdown
-              components={{
-                table: ({ node, ...props }) => (
-                  <div style={{ overflowX: "auto" }}>
-                    <table {...props} />
-                  </div>
-                ),
-                pre: ({ node, ...props }) => (
-                  <div style={{ overflowX: "auto" }}>
-                    <pre {...props} />
-                  </div>
-                ),
-              }}
-            >
-              {msg.text}
-            </ReactMarkdown>
+            {msg.user ? (
+              msg.text
+            ) : (
+              <ReactMarkdown>{msg.text}</ReactMarkdown>
+            )}
           </div>
         ))}
         {isLoading && (
           <div className="loading-indicator">
-            <img
-              src="/logoCHat.png"
-              alt="Bot Logo"
-              className="bot-logo"
-            />
+            <img src="/logoCHat.png" alt="Bot Logo" className="bot-logo" />
             <div className="spinner"></div>
             <span>Escribiendo...</span>
           </div>
         )}
+        <div ref={messagesEndRef} /> {/* Ancla para desplazarse al final */}
       </div>
       <div className="chat-input-container">
         <input

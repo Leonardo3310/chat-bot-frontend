@@ -3,102 +3,83 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%; /* Ocupa todo el ancho de la pantalla */
-  height: 100vh; /* Ocupa todo el alto de la pantalla */
-  margin: 0; /* Elimina márgenes */
-  background-color: #1e1e2f; /* Fondo del chat */
+  width: 100%;
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  margin: 0;
+  background-color: #1e1e2f; /* Fondo oscuro */
   color: white;
-  overflow: hidden; /* Asegura que no haya desbordamiento */
-}
-
-/* Encabezado del chat */
-.chat-header {
-  padding: 20px;
-  background-color: #6369ca; /* Color del encabezado */
-  text-align: center;
-  font-size: 1.2em; /* Tamaño del texto */
-  font-weight: bold;
-  color: white;
+  overflow: hidden; /* Evita desbordamientos en el contenedor principal */
 }
 
 /* Contenedor de mensajes */
 .chat-messages {
-  flex-grow: 1;
+  flex-grow: 1; /* Ocupa el espacio disponible entre el header y el input */
   padding: 20px;
-  overflow-y: auto; /* Permite desplazamiento si los mensajes son muchos */
-  overflow-x: hidden; /* Oculta scroll horizontal */
+  overflow-y: auto; /* Habilita el scroll vertical */
   display: flex;
   flex-direction: column;
   gap: 10px; /* Espacio entre los mensajes */
   scroll-behavior: smooth; /* Desplazamiento suave */
 }
 
-/* Mensaje del usuario */
-.user-message {
-  align-self: flex-end;
-  background-color: #007bff; /* Fondo del mensaje del usuario */
-  color: white;
-  border-radius: 8px;
+/* Mensaje individual */
+.message {
+  max-width: 70%;
   padding: 10px;
-  max-width: 70%; /* Máximo ancho del mensaje */
+  border-radius: 8px;
+  line-height: 1.5;
   word-wrap: break-word;
   white-space: pre-wrap; /* Respeta saltos de línea */
 }
 
-/* Mensaje del bot con logo */
+/* Mensaje del usuario */
+.user-message {
+  align-self: flex-end;
+  background-color: #007bff;
+  color: white;
+}
+
+/* Mensaje del bot */
 .bot-message {
-  display: flex; /* Alinea el contenido horizontalmente */
-  align-items: flex-start; /* Alinea verticalmente al inicio */
-  gap: 10px; /* Espacio entre el logo y el texto */
-  background-color: #333; /* Fondo del mensaje del bot */
+  display: flex;
+  align-items: flex-start; /* Alinea el logo y el texto al inicio */
+  gap: 10px;
+  align-self: flex-start;
+  background-color: #333;
   color: white;
   border-radius: 8px;
   padding: 10px;
-  max-width: 70%; /* Máximo ancho del mensaje */
   word-wrap: break-word;
-  white-space: pre-wrap; /* Respeta saltos de línea */
-  overflow-x: auto; /* Scroll horizontal para bloques extensos */
+  white-space: pre-wrap;
 }
 
 /* Logo del bot */
 .bot-logo {
-  width: 40px; /* Ancho del logo */
-  height: 40px; /* Alto del logo */
-  border-radius: 50%; /* Hace el logo redondo */
-  background-color: white; /* Fondo blanco (opcional) */
-  object-fit: cover; /* Ajusta la imagen sin deformarla */
-}
-
-/* Bloques de código y tablas */
-.message pre, .message table {
-  max-width: 100%; /* Asegura que no excedan el contenedor */
-  overflow-x: auto; /* Scroll horizontal para contenido extenso */
-  background-color: #1e1e2f; /* Fondo para bloques de código */
-  color: #fff; /* Texto legible */
-  padding: 10px;
-  border-radius: 5px;
-  white-space: pre-wrap; /* Rompe líneas largas en bloques de código */
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 /* Contenedor del campo de entrada */
 .chat-input-container {
   display: flex;
   padding: 10px;
-  background-color: #282c34; /* Fondo de la barra de entrada */
+  background-color: #282c34;
   align-items: center;
-  border-top: 1px solid #444; /* Línea separadora */
+  border-top: 1px solid #444;
 }
 
 /* Campo de texto */
 .chat-input-container input {
-  flex-grow: 1; /* Ocupa el espacio disponible */
+  flex-grow: 1;
   padding: 10px;
   border-radius: 5px;
   border: none;
   margin-right: 10px;
   font-size: 1em;
-  background-color: #1e1e2f; /* Fondo del campo de texto */
-  color: white; /* Texto blanco */
+  background-color: #1e1e2f;
+  color: white;
 }
 
 /* Botón de enviar */
@@ -113,7 +94,7 @@
 }
 
 .chat-input-container button:hover {
-  background-color: #0056b3; /* Color al pasar el mouse */
+  background-color: #0056b3;
 }
 
 /* Indicador de carga */
@@ -135,12 +116,32 @@
   animation: spin 1s linear infinite;
 }
 
-/* Animación del spinner */
 @keyframes spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Diseño responsivo */
+@media (max-width: 768px) {
+  .chat-container {
+    width: 100%;
+    height: 100vh;
+  }
+
+  .chat-input-container input {
+    font-size: 0.9em;
+  }
+
+  .chat-input-container button {
+    font-size: 0.9em;
+  }
+
+  .bot-logo {
+    width: 30px;
+    height: 30px;
   }
 }
