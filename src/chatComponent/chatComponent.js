@@ -41,15 +41,12 @@ function ChatComponent() {
 
   return (
     <div className="chat-container">
-      {/* Nuevo Header con Material-UI */}
       <ChatHeader />
-
-      {/* Resto del componente */}
       <div className="chat-messages">
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={msg.user ? "message user-message" : "message bot-message"}
+            className={msg.user ? "user-message" : "bot-message"}
           >
             {!msg.user && (
               <img
@@ -58,11 +55,22 @@ function ChatComponent() {
                 className="bot-logo"
               />
             )}
-            {msg.user ? (
-              msg.text
-            ) : (
-              <ReactMarkdown>{msg.text}</ReactMarkdown>
-            )}
+            <ReactMarkdown
+              components={{
+                table: ({ node, ...props }) => (
+                  <div style={{ overflowX: "auto" }}>
+                    <table {...props} />
+                  </div>
+                ),
+                pre: ({ node, ...props }) => (
+                  <div style={{ overflowX: "auto" }}>
+                    <pre {...props} />
+                  </div>
+                ),
+              }}
+            >
+              {msg.text}
+            </ReactMarkdown>
           </div>
         ))}
         {isLoading && (
