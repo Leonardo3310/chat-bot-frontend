@@ -41,7 +41,7 @@
 
 /* Mensaje del bot */
 .bot-message {
-  display: flex;
+  display: block;
   align-items: flex-start; /* Alinea el logo y el texto al inicio */
   gap: 10px;
   align-self: flex-start;
