@@ -11,20 +11,27 @@
 
 /* Contenedor principal del chat */
 .chat-container {
-  width: 80%; /* Ocupa el 80% del ancho de la pantalla */
-  max-width: 600px; /* Limita el ancho máximo a 600px */
+  width: 90%; /* Más flexible en pantallas pequeñas */
+  max-width: 600px; /* Limita el ancho máximo */
+  height: calc(100vh - 40px); /* Altura dinámica */
   background-color: #333;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column; /* Organiza en columna */
+  justify-content: space-between; /* Espacio entre mensajes e input */
 }
 
 /* Contenedor de mensajes con scrollbar si es necesario */
 .messages {
-  max-height: 400px; /* Altura máxima para el área de mensajes */
-  overflow-y: auto;
+  height: calc(100vh - 200px); /* Altura dinámica según el viewport */
+  overflow-y: auto; /* Scroll vertical solo cuando sea necesario */
   padding: 10px;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espacio entre mensajes */
 }
 
 /* Estilos de los mensajes del usuario y del bot */
@@ -51,13 +58,20 @@
   align-self: flex-start;
 }
 
-/* Estilos del campo de entrada y botón de enviar */
+/* Contenedor del campo de entrada */
+.input-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
 input {
-  width: 70%; /* Ajusta el ancho del campo de texto */
+  flex-grow: 1; /* Ocupa todo el espacio disponible */
   padding: 10px;
   border-radius: 5px;
   border: none;
-  margin-right: 5px;
+  margin-right: 10px;
+  font-size: 1em;
 }
 
 button {
@@ -69,13 +83,22 @@ button {
   cursor: pointer;
 }
 
+/* Hover para botón */
+button:hover {
+  background-color: #0056b3;
+}
+
 /* Estilos responsivos para pantallas pequeñas */
 @media (max-width: 768px) {
   .chat-container {
-    width: 95%; /* Casi todo el ancho en pantallas pequeñas */
+    width: 95%; /* Ajuste para pantallas pequeñas */
   }
 
   input {
-    width: 65%; /* Ajusta el ancho del campo de texto */
+    font-size: 0.9em;
+  }
+
+  button {
+    font-size: 0.9em;
   }
 }
