@@ -1,5 +1,5 @@
 import React from "react";
-import ChatComponent from "./chatComponent/ChatComponent.js";
+import ChatComponent from "./ChatComponent/ChatComponent.js";
 
 function App() {
   return (
