@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
+import rehypeKatex from "rehype-katex"; // Habilita soporte para LaTeX
+import rehypeRaw from "rehype-raw"; // Permite contenido HTML en Markdown
+import "katex/dist/katex.min.css"; // Importa estilos de KaTeX
 import "./ChatComponent.css";
 
 function ChatComponent() {
@@ -30,12 +33,26 @@ function ChatComponent() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),
       });
+
+      // Verificar si la respuesta es JSON
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
       const data = await response.json();
 
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: data.response, user: false },
-      ]);
+      // Procesar la respuesta JSON, asegurándose de que `data.response` exista
+      if (data.response) {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: data.response, user: false },
+        ]);
+      } else {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: "Respuesta no válida del servidor.", user: false },
+        ]);
+      }
     } catch (error) {
       console.error("Error:", error);
       setMessages((prevMessages) => [
@@ -50,7 +67,7 @@ function ChatComponent() {
   return (
     <div className="chat-container">
       <div className="chat-header">
-        <h1>-Financhat</h1>
+        <h1>Financhat</h1>
       </div>
       <div className="chat-messages">
         {messages.map((msg, index) => (
@@ -68,7 +85,10 @@ function ChatComponent() {
             {msg.user ? (
               msg.text
             ) : (
-              <ReactMarkdown>{msg.text}</ReactMarkdown>
+              <ReactMarkdown
+                rehypePlugins={[rehypeKatex, rehypeRaw]} // Activa soporte para LaTeX y HTML
+                children={processMessage(msg.text)}
+              />
             )}
           </div>
         ))}
@@ -94,5 +114,14 @@ function ChatComponent() {
     </div>
   );
 }
+
+const processMessage = (text) => {
+  return text
+    .replace(/\\\[/g, "$$") // Asegura delimitadores de bloque
+    .replace(/\\\]/g, "$$")
+    .replace(/\\\(/g, "\\(") // Asegura delimitadores inline
+    .replace(/\\\)/g, "\\)")
+    .replace(/\n/g, "  \n"); // Convierte saltos de línea a Markdown
+};
 
 export default ChatComponent;
