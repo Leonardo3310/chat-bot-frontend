@@ -70,6 +70,13 @@ function ChatComponent() {
         <h1>Financhat</h1>
       </div>
       <div className="chat-messages">
+      <div className="static-example">
+        {/* Ejemplo estático para probar LaTeX */}
+        <ReactMarkdown
+          rehypePlugins={[rehypeKatex, rehypeRaw]}
+          children={staticExample}
+        />
+      </div>
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -121,7 +128,11 @@ const processMessage = (text) => {
     .replace(/\\\]/g, "$$")
     .replace(/\\\(/g, "\\(") // Asegura delimitadores inline
     .replace(/\\\)/g, "\\)")
+    .replace(/\\\\/g, "\\") 
     .replace(/\n/g, "  \n"); // Convierte saltos de línea a Markdown
 };
-
+const staticExample = `
+Aquí tienes un ejemplo estático de fórmula LaTeX:
+$$ i = \\frac{5.5}{100} = 0.055 $$
+`;
 export default ChatComponent;
