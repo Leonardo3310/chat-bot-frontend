@@ -133,6 +133,17 @@ const processMessage = (text) => {
 };
 const staticExample = `
 Aquí tienes un ejemplo estático de fórmula LaTeX:
-$$ i = \\frac{5.5}{100} = 0.055 $$
+
+$$
+TEA = (1 + 0.057)^2 - 1
+$$
+
+El resultado es:
+
+$$
+TEA ≈ 0.116649 \quad \text{o} \quad 11.66\%
+$$
 `;
+
+
 export default ChatComponent;
