@@ -1,12 +1,12 @@
-import React from "react";
 import { AppBar, Toolbar, Typography } from "@mui/material";
+import React from "react";
 
 function ChatHeader() {
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#6369ca" }}>
+    <AppBar position="static" sx={{ backgroundColor: "#282c34" }}>
       <Toolbar>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Financhat
+          FINANCHAT
         </Typography>
       </Toolbar>
     </AppBar>

@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import "katex/dist/katex.min.css"; // Importa estilos de KaTeX
+import React, { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import remarkMath from "remark-math"; // Detecta matemáticas en Markdown
 import rehypeKatex from "rehype-katex"; // Habilita soporte para LaTeX
 import rehypeRaw from "rehype-raw"; // Permite contenido HTML en Markdown
-import "katex/dist/katex.min.css"; // Importa estilos de KaTeX
+import remarkGfm from "remark-gfm"; //habilita el soporte para las tablas
+import remarkMath from "remark-math"; // Detecta matemáticas en Markdown
 import "./ChatComponent.css";
 
 function ChatComponent() {
@@ -68,7 +69,12 @@ function ChatComponent() {
   return (
     <div className="chat-container">
       <div className="chat-header">
-        <h1>Financhat</h1>
+      <img
+          src="/FINANCHAT_round.png"
+          alt="Bot Logo"
+          className="bot-logo"
+              />
+        <h1>  FINANCHAT</h1>
       </div>
       <div className="chat-messages">
         {messages.map((msg, index) => (
@@ -77,27 +83,32 @@ function ChatComponent() {
             className={msg.user ? "message user-message" : "message bot-message"}
           >
             {!msg.user && (
+          <div className="bot-message-content">
+            <div className="bot-header">
               <img
-                src="/logoCHat.png"
+                src="/FINANCHAT_round.png"
                 alt="Bot Logo"
                 className="bot-logo"
               />
-            )}
-            {msg.user ? (
-              msg.text
-            ) : (
+              <span className="bot-name">Financhat</span> {/* Nombre del bot */}
+            </div>
+            <div className="bot-message-text">
               <ReactMarkdown
-              remarkPlugins={[remarkMath]} // Procesa las matemáticas
-              rehypePlugins={[rehypeKatex, rehypeRaw]} // Renderiza las matemáticas y HTML
-            >
-              {sanitizeMessage(msg.text)}
-            </ReactMarkdown>
-            )}
+                remarkPlugins={[remarkMath, remarkGfm]} // Procesa las matemáticas
+                rehypePlugins={[rehypeKatex, rehypeRaw]} // Renderiza las matemáticas y HTML
+              >
+                {sanitizeMessage(msg.text)}
+              </ReactMarkdown>
+            </div>
+          </div>
+        )}
+
+            {msg.user && <span>{msg.text}</span>}
           </div>
         ))}
         {isLoading && (
           <div className="loading-indicator">
-            <img src="/logoCHat.png" alt="Bot Logo" className="bot-logo" />
+            <img src="/FINANCHAT_LOGO.png" alt="Bot Logo" className="bot-logo" />
             <div className="spinner"></div>
             <span>Escribiendo...</span>
           </div>
@@ -124,7 +135,5 @@ const sanitizeMessage = (text) => {
     .replace(/\\\\/g, "\\") // Limpia escapes adicionales
     .trim(); // Elimina espacios innecesarios
 };
-
-
 
 export default ChatComponent;

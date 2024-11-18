@@ -3,10 +3,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  /*min-height: 100vh;*/
   background-color: #282c34;
   color: white;
   text-align: center;
+  height: 100vh;
+  overflow: hidden;
 }
 
 /* Contenedor principal del chat */
@@ -21,6 +23,7 @@
   display: flex;
   flex-direction: column; /* Organiza en columna */
   justify-content: space-between; /* Espacio entre mensajes e input */
+  overflow: hidden; /* Oculta el contenido desbordante */
 }
 
 /* Contenedor de mensajes con scrollbar si es necesario */
@@ -45,14 +48,14 @@
 }
 
 .user-message {
-  background-color: #007bff;
+  background-color: #8fd462;
   color: white;
   text-align: right;
   align-self: flex-end;
 }
 
 .bot-message {
-  background-color: #444;
+  background-color: #397c6b;
   color: white;
   text-align: left;
   align-self: flex-start;
