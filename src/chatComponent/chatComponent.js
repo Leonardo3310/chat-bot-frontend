@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
+import remarkMath from "remark-math"; // Detecta matemáticas en Markdown
 import rehypeKatex from "rehype-katex"; // Habilita soporte para LaTeX
 import rehypeRaw from "rehype-raw"; // Permite contenido HTML en Markdown
 import "katex/dist/katex.min.css"; // Importa estilos de KaTeX
@@ -70,13 +71,6 @@ function ChatComponent() {
         <h1>Financhat</h1>
       </div>
       <div className="chat-messages">
-      <div className="static-example">
-        {/* Ejemplo estático para probar LaTeX */}
-        <ReactMarkdown
-          rehypePlugins={[rehypeKatex, rehypeRaw]}
-          children={staticExample}
-        />
-      </div>
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -93,9 +87,11 @@ function ChatComponent() {
               msg.text
             ) : (
               <ReactMarkdown
-                rehypePlugins={[rehypeKatex, rehypeRaw]} // Activa soporte para LaTeX y HTML
-                children={processMessage(msg.text)}
-              />
+              remarkPlugins={[remarkMath]} // Procesa las matemáticas
+              rehypePlugins={[rehypeKatex, rehypeRaw]} // Renderiza las matemáticas y HTML
+            >
+              {sanitizeMessage(msg.text)}
+            </ReactMarkdown>
             )}
           </div>
         ))}
@@ -122,28 +118,13 @@ function ChatComponent() {
   );
 }
 
-const processMessage = (text) => {
+const sanitizeMessage = (text) => {
   return text
-    .replace(/\\\[/g, "$$") // Asegura delimitadores de bloque
-    .replace(/\\\]/g, "$$")
-    .replace(/\\\(/g, "\\(") // Asegura delimitadores inline
-    .replace(/\\\)/g, "\\)")
-    .replace(/\\\\/g, "\\") 
-    .replace(/\n/g, "  \n"); // Convierte saltos de línea a Markdown
+    .replace(/\\\$/g, "$$") // Asegura delimitadores de bloque
+    .replace(/\\\\/g, "\\") // Limpia escapes adicionales
+    .trim(); // Elimina espacios innecesarios
 };
-const staticExample = `
-Aquí tienes un ejemplo estático de fórmula LaTeX:
 
-$$
-TEA = (1 + 0.057)^2 - 1
-$$
-
-El resultado es:
-
-$$
-TEA ≈ 0.116649 \quad \text{o} \quad 11.66\%
-$$
-`;
 
 
 export default ChatComponent;
